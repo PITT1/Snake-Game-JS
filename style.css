@@ -8,7 +8,7 @@
 }
 
 body{
-    background-color: rgb(129, 129, 129);
+    background-color: rgb(76, 112, 230);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,11 +21,11 @@ body{
     display: grid;
     height: 500px;
     width: 500px;
-    background-color: rgb(28, 117, 20);
+    background-color: rgb(39, 10, 121);
     grid-template: repeat(30, 1fr) / repeat(30, 1fr);
     justify-items: center;
     align-items: center;
-    border: 2px solid;
+    border: 2px solid white;
 }
 
 .Snake {

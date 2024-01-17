@@ -9,7 +9,8 @@ let foodX = 22;
 let foodY = 12;
 let score = 0;
 let snakeBody = [];
-
+let gameVelocity;
+let isPause = false;
 let html;
 
 const checkDoorCrash = () => {
@@ -63,6 +64,24 @@ const keyPressMove = (tecla) => {
         snakeDirectionX = 1;
         snakeDirectionY = 0;
     }
+
+    if (tecla.key == "p" || tecla.key == "P") {
+        gamePause();
+    }
+}
+
+const gamePause = () => {
+    if (isPause == false) {
+        clearInterval(gameVelocity);
+        isPause = true;
+    } else {
+        gameResume();
+        isPause = false;
+    }
+}
+
+const gameResume = () => {
+    gameVelocity = setInterval(initGame, 100);
 }
 
 const initGame = () => {
@@ -77,13 +96,13 @@ const initGame = () => {
         updateFoodPosition();
         score += 1;
         scoreDiv.innerHTML = `Score: ${score}`;
-        snakeBody.push([foodY,foodX]);
+        snakeBody.push([snakeX, snakeY]);
+    } else {
+        for(let i = snakeBody.length - 1; i > 0; i--){
+            snakeBody[i] = snakeBody[i - 1].slice();
+        }
+        snakeBody[0] = [snakeX, snakeY];
     }
-
-    for(let i = snakeBody.length - 1; i > 0; i--){
-        snakeBody[i] = [i - 1];
-    }
-    snakeBody[0] = [snakeX, snakeY];
 
     for (let i = 0; i < snakeBody.length; i++) {
         html += `<div class="Snake" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;
@@ -94,6 +113,6 @@ const initGame = () => {
     screen.innerHTML = html;
 }
 
-setInterval(initGame, 100);
+gameVelocity = setInterval(initGame, 100);
 
 window.addEventListener('keydown', keyPressMove);
